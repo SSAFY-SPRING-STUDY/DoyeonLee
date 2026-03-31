@@ -1,5 +1,6 @@
 package org.example.springstudy.service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.springstudy.controller.dto.PostRequest;
 import org.example.springstudy.controller.dto.PostResponse;
 import org.example.springstudy.entity.PostEntity;
@@ -10,24 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service // 의존성 주입
+@Service
+@RequiredArgsConstructor // 해당 클래스의 생성자
 public class PostService {
     private final PostRepository postRepository;
-
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
-
 
     // 1.
     public PostResponse save(PostRequest request) {
         PostEntity entity = new PostEntity(request.getTitle(), request.getContent(), request.getAuthor());
-        PostEntity returnedEntity = postRepository.save(entity); //entity를 생성자로 받고
 
-        PostResponse response = new PostResponse(returnedEntity.getId(), // 컨트롤러가 다시 받아서 사용자에게 전달함
-                returnedEntity.getTitle(),
-                returnedEntity.getContent(),
-                returnedEntity.getAuthor());
+        PostEntity savedEntity = postRepository.save(entity); // entity를 받기.
+
+        PostResponse response = new PostResponse(
+                savedEntity.getId(), // 컨트롤러가 다시 받아서 사용자에게 전달함
+                savedEntity.getTitle(),
+                savedEntity.getContent(),
+                savedEntity.getAuthor());
         return response;
     }
 
@@ -58,7 +57,6 @@ public class PostService {
                     entity.getContent(),
                     entity.getAuthor()
             );
-
             return response;
         }
         else {
@@ -76,7 +74,7 @@ public class PostService {
             entity.update(request.getTitle(), request.getContent());
         }
         else {
-            throw new IllegalArgumentException("수정하려는 게시글이 없습니다. ID: " + id);
+            throw new RuntimeException("수정하려는 게시글이 없습니다. ID: " + id);
         }
 
     }

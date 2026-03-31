@@ -19,7 +19,7 @@ public class PostEntity {
         this.author = author;
     }
 
-    // 4. 수정 위한 메서드  - title과 content만 바꿀 수 있게
+    // 수정 위한 생성자.  - title과 content만 바꿀 수 있게
     public void update(String title, String content) {
         this.title = title;
         this.content = content;

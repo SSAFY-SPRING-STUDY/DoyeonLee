@@ -14,7 +14,6 @@ public class PostRepository {
     // 1. 저장
     public PostEntity save(PostEntity postEntity){
         postList.add(postEntity);
-
         return postEntity;
     }
 
@@ -30,12 +29,11 @@ public class PostRepository {
             if (post.getId().equals(id)){
                 return Optional.of(post);
             }
-
         }
         return Optional.empty(); // 예외처리 > 비어있는 상태 반환
     }
 
-    // 5. id로 리스트에서 삭제
+    // 5. id로 리스트에서 삭제 -> 삭제하려면 2번
     public void deleteById(Long id){
         for (int i = 0; i < postList.size(); i++) {
             PostEntity post = postList.get(i);
