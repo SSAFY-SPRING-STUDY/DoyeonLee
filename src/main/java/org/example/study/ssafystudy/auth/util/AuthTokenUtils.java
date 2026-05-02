@@ -6,12 +6,10 @@ import lombok.NoArgsConstructor;
 public class AuthTokenUtils {
 
 
-    // 유효하지 않은 경우 true 반환
+    // 유효하지 않은 경우 false 반환
     public  static boolean isValidBearerToken(String token){
-        if (token == null) return false;
-
-
-        return token.trim().startsWith("Bearer ");
+        if (token == null || token.isBlank()) return false;
+        return token.startsWith("Bearer "); // Bearer 토큰으로 시작하는지 화깅ㄴ
     }
 
 

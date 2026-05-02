@@ -28,13 +28,15 @@ public class MemberController {
 
     // get 방식으로 내 정보 가져오기
     @GetMapping("/me")
-    public MemberResponse getMyInfo(@RequestParam("bearerToken") String bearerToken){
+
+    // Q. 질문 >> 여기서는 왜 RequestParam을 활용한 것인지?
+    // logout 메서드에서는 RequestHeader 활용했었음.
+    public MemberResponse getMyInfo(@RequestHeader("Authorization") String bearerToken){
 
         boolean isValid = AuthTokenUtils.isValidBearerToken(bearerToken);
 
-
-        // 토큰 유효성 검사
-        if(!AuthTokenUtils.isValidBearerToken(bearerToken)){
+        // 토큰 유효성 검사 -> false - 유효하지 않은 토큰이라면
+        if(!isValid){ // 유효 하지 않은 토큰이라면
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다.");
         }
 

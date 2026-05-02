@@ -22,9 +22,10 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void logout(@RequestHeader(value = "Authorization") String authHeader){
 
-        if(AuthTokenUtils.isValidBearerToken(authHeader)){
+        if(!AuthTokenUtils.isValidBearerToken(authHeader)){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "토큰이 없거나 형식이 잘못되었습니다.");
         }
 
