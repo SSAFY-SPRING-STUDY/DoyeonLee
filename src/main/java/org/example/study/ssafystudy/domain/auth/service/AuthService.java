@@ -6,9 +6,9 @@ import org.example.study.ssafystudy.domain.auth.controller.dto.LoginRequest;
 import org.example.study.ssafystudy.domain.auth.controller.dto.LoginResponse;
 import org.example.study.ssafystudy.domain.member.entity.MemberEntity;
 import org.example.study.ssafystudy.domain.member.repository.MemberRepository;
-import org.springframework.http.HttpStatus;
+import org.example.study.ssafystudy.global.exception.CustomException;
+import org.example.study.ssafystudy.global.exception.error.ErrorCode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,16 +21,14 @@ public class AuthService {
 
         // username이 없으면 에러
         MemberEntity member = memberRepository.findByUsername(request.username())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "등록되지 않은 사용자입니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.UNAUTHORIZED));
 
         // 비밀번호가 일치하지 않으면 에러
         if(!member.checkPassword(request.password())){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "사용자의 비밀번호를 확인해주세요.");
+            throw new CustomException(ErrorCode.UNAUTHORIZED);
         }
 
-        // 위 두가지에 안 걸렸으면 세션 생성
         String accessToken = sessionManager.createSession(member.getId());
-
         return LoginResponse.from(accessToken);
     }
 

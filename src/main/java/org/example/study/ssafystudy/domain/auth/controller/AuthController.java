@@ -6,9 +6,10 @@ import org.example.study.ssafystudy.domain.auth.controller.dto.LoginRequest;
 import org.example.study.ssafystudy.domain.auth.controller.dto.LoginResponse;
 import org.example.study.ssafystudy.domain.auth.service.AuthService;
 import org.example.study.ssafystudy.domain.auth.util.AuthTokenUtils;
+import org.example.study.ssafystudy.global.exception.CustomException;
+import org.example.study.ssafystudy.global.exception.error.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,7 +27,7 @@ public class AuthController {
     public void logout(@RequestHeader(value = "Authorization") String authHeader){
 
         if(!AuthTokenUtils.isValidBearerToken(authHeader)){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "토큰이 없거나 형식이 잘못되었습니다.");
+            throw new CustomException(ErrorCode.INVALID_TOKEN);
         }
 
         // 세션 키만 추출

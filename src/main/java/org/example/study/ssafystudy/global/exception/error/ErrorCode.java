@@ -15,7 +15,7 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "500","서버 내부 오류가 발생했습니다."),
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "404","존재하지 않는 회원입니다."),
     INVALID_USERNAME(HttpStatus.UNAUTHORIZED,"401","아이디 또는 비밀번호가 일치하지 않습니다."),
-    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "401","아이디 또는 비밀번호가 일치하지 않습니다."),
+    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "401","비밀번호가 일치하지 않습니다."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "401","토큰 정보가 유효하지 않습니다."),
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "404","존재하지 않는 게시글입니다.")
     ;
