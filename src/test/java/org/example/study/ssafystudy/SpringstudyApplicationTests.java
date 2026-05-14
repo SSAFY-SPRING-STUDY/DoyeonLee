@@ -1,4 +1,4 @@
-package org.example.springstudy;
+package org.example.study.ssafystudy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
